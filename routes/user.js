@@ -1,9 +1,11 @@
 const express=require("express");//Router
+const { userMiddleware } = require("../middleware/user");
 const {Router}=require("express");
-const {userModel}=require("../db");
+const {userModel,purchaseModel,courseModel}=require("../db");
 const jwt=require("jsonwebtoken")
 // const JWT_USER_PASSWORD="aladkldffm123"
 const {JWT_USER_PASSWORD}=require("../config");
+const { courseRouter } = require("./course");
 const userRouter=Router()
 
 userRouter.post("/signup",async function(req,res){
@@ -55,8 +57,12 @@ userRouter.get("/purchases",userMiddleware,async function(req,res){
     const purchases=await purchaseModel.find({
         userId
     })
+    const coursesData=await courseModel.find({
+        _id:{$in:purchases.map(x=>x.courseId)}
+    })
     res.json({
-        purchases
+        purchases,
+        coursesData
     })
 })
 

@@ -69,7 +69,7 @@ adminRouter.post("/course",adminMiddleware,async function(req,res){
         courseId:course._id
     })
 })
-adminRouter.put("/course",adminMiddleware,async function(req,res){
+adminRouter.put("/course/update",adminMiddleware,async function(req,res){
     const adminId=req.userId;
     const {title,description,imageUrl,price,courseId}=req.body;
 
@@ -107,7 +107,6 @@ adminRouter.get("/course/bulk",adminMiddleware,async function(req,res){
 module.exports={
     adminRouter:adminRouter
 }
-
 
 ///dhruv rathee can not update the course of mr.beast 
 //with his token because creator id is diff and there is not row found 
